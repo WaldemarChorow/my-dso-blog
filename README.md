@@ -1,4 +1,4 @@
-# My Developer Blog
+# Waldemar Chorow - Learn Diary
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
@@ -8,16 +8,13 @@ This repository hosts a developer blog built with Docusaurus. It includes tools 
 
 ## Table of Contents
 
-- [My Developer Blog](#my-developer-blog)
+- [Waldemar Chorow - Learn Diary](#waldemar-chorow---learn-diary)
   - [Repository Description](#repository-description)
   - [Table of Contents](#table-of-contents)
   - [Quickstart](#quickstart)
     - [Prerequisites](#prerequisites)
   - [Repository Structure](#repository-structure)
   - [Deployment](#deployment)
-    - [Deploy to Github Pages](#deploy-to-github-pages)
-    - [Deploying using NGINX](#deploying-using-nginx)
-    - [Contributing](#contributing)
 
 ## Quickstart
 
@@ -78,28 +75,4 @@ New content can be added as follows:
 
 ## Deployment
 
-### Deploy to Github Pages
-
-To deploy using SSH:
-
-```
-$ USE_SSH=true pnpm deploy
-```
-
-To deploy without using SSH, run:
-
-```
-$ GIT_USER=<Your GitHub username> pnpm deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-
-### Deploying using NGINX
-
-To deploy the site using NGINX and Docker, follow this [guide](./docs/guides/deploy-docusaurus-with-docker-and-nginx.md)
-
-### Contributing
-
-Currently, this project does not seek collaborators, but we're open to suggestions regarding enhancements or guides to prepare.
-Open an issue with a detailed description on the change you suggest and elaborate why it's benefitial for the project and vast majority.
-If accepted in the discussion, open a pull request from your fork of this repository to contribute your changes.
+This website is automatically deployed to GitHub Pages using a GitHub Actions workflow. When a commit is pushed to the main branch, the workflow is triggered, and the website is automatically built and deployed to GitHub Pages.
