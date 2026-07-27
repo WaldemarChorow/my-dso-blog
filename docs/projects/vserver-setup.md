@@ -1,6 +1,6 @@
 # V-Server Setup
 
-Documentation of configuring my first cloud server during the Developer Akademie DevSecOps Course. Step-by-step guide to installing and securing a web server with Nginx and SSH authentication.
+Dokumentation zur Konfiguration meines ersten Cloud-Servers während des Developer Akademie DevSecOps-Kurses. Schritt-für-Schritt-Anleitung zur Installation und Sicherung eines Webservers mit Nginx und SSH-Authentifizierung.
 
 ## Table of Contents
 
@@ -114,7 +114,7 @@ ls -al ~/
 Change to SSH directory:
 
 ```bash
-cd /.ssh
+cd ~/.ssh
 ```
 
 Display authorized keys:
@@ -153,6 +153,20 @@ Restart SSH service:
 sudo systemctl restart ssh.service
 ```
 
+If the following warning appears:
+
+```
+Warning: The unit file, source configuration file or drop-ins of ssh.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+```
+
+Then run:
+
+```bash
+sudo systemctl daemon-reload
+```
+
+Afterwards, repeat step 1.
+
 Logout and verify functionality:
 
 ```bash
@@ -178,6 +192,36 @@ ssh -o PubkeyAuthentication=no user@000.000.00.00
 ```bash
 alias name_alias="ssh -i ~/.ssh/example_sshkey_name user@000.000.00.00"
 ```
+
+The alias only works in the **current terminal session**. After restarting, it will be gone.
+
+To save it **permanently**, add it to your shell configuration:
+
+**For Zsh:**
+
+```bash
+nano ~/.zshrc
+```
+
+Add the following line at the end:
+
+```bash
+alias name_alias="ssh -i ~/.ssh/sshkey_name user@000.000.000.000"
+```
+
+Save (Ctrl+X, Y, Enter), then:
+
+```bash
+source ~/.zshrc
+```
+
+Now you can simply type:
+
+```bash
+daserver
+```
+
+And you're connected! ✓
 
 ### Nginx Configuration
 
