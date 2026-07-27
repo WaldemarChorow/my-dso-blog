@@ -1,16 +1,16 @@
 # V-Server Setup
 
-Dokumentation der Konfiguration meines ersten Cloud-Servers im Developer Akademie DevSecOps Kurs. Schritt-für-Schritt Anleitung zur Installation und Sicherung eines Webservers mit Nginx und SSH-Authentifizierung.
+Documentation of configuring my first cloud server during the Developer Akademie DevSecOps Course. Step-by-step guide to installing and securing a web server with Nginx and SSH authentication.
 
-## Inhaltsverzeichnis
+## Table of Contents
 
 1. [Quickstart](#quickstart)
 2. [Server Update](#server-update)
 3. [Nginx Installation](#nginx-installation)
-4. [SSH-Keys und erstes Login](#ssh-keys-und-erstes-login)
-5. [SSH-Konfiguration](#ssh-konfiguration)
-6. [Nginx Konfiguration](#nginx-konfiguration)
-7. [SSH-Config für mehrere Identities](#ssh-config-für-mehrere-identities)
+4. [SSH Keys and Initial Login](#ssh-keys-and-initial-login)
+5. [SSH Configuration](#ssh-configuration)
+6. [Nginx Configuration](#nginx-configuration)
+7. [SSH Config for Multiple Identities](#ssh-config-for-multiple-identities)
 
 import GithubLinkAdmonition from '@site/src/components/GithubLinkAdmonition';
 
@@ -22,24 +22,24 @@ import GithubLinkAdmonition from '@site/src/components/GithubLinkAdmonition';
 
 ## Quickstart
 
-1. Server updaten: `sudo apt update && sudo apt upgrade`
-2. Nginx installieren: `sudo apt install nginx -y`
-3. SSH-Keys generieren: `ssh-keygen -t ed25519`
-4. Mit Server verbinden: `ssh -i ~/.ssh/keyname user@000.000.000.000`
-5. SSH-Key auf Server kopieren: `ssh-copy-id -i ~/.ssh/keyname user@000.000.000.000`
-6. SSH-Config anpassen und Password-Login deaktivieren
+1. Update server: `sudo apt update && sudo apt upgrade`
+2. Install Nginx: `sudo apt install nginx -y`
+3. Generate SSH keys: `ssh-keygen -t ed25519`
+4. Connect to server: `ssh -i ~/.ssh/keyname user@000.000.000.000`
+5. Copy SSH key to server: `ssh-copy-id -i ~/.ssh/keyname user@000.000.000.000`
+6. Adjust SSH config and disable password login
 
 ## Description
 
 ### Server Update
 
-Zunächst sollte der Server aktualisiert werden:
+First, update the server:
 
 ```bash
 sudo apt update
 ```
 
-Wenn neue Pakete vorhanden sind:
+If new packages are available:
 
 ```bash
 sudo apt upgrade
@@ -47,169 +47,169 @@ sudo apt upgrade
 
 ### Nginx Installation
 
-Nginx Webserver installieren:
+Install Nginx web server:
 
 ```bash
 sudo apt install nginx -y
 ```
 
-Status des Services abfragen:
+Check service status:
 
 ```bash
 systemctl status nginx.service
 ```
 
-Der Server ist nun über die IP-Adresse erreichbar.
+The server is now accessible via its IP address.
 
-### SSH-Keys und erstes Login
+### SSH Keys and Initial Login
 
-#### SSH-Keys erzeugen
+#### Generate SSH Keys
 
 ```bash
 ssh-keygen -t ed25519
 ```
 
-Optionales Passwort eingeben. Dies erzeugt einen Public und Private Key.
+Enter an optional passphrase. This creates a public and private key pair.
 
-Den Key-Pfad anzeigen:
+Display the key path:
 
 ```bash
 ls ~/.ssh/example
 ```
 
-#### Mit dem Server verbinden
+#### Connect to the Server
 
 ```bash
-ssh nutzer@000.000.000.000
+ssh user@000.000.000.000
 ```
 
-- Fingerprint bestätigen
-- Passwort eingeben
-- Verbindung zum Server hergestellt
+- Confirm the fingerprint
+- Enter your password
+- Connection to server established
 
-#### SSH-Key auf dem Server hinterlegen
+#### Store SSH Key on the Server
 
 ```bash
 ssh-copy-id -i ~/.ssh/example user@000.000.00.00
 ```
 
-Der Private Key bleibt auf dem lokalen Rechner. Passwort des Servers eingeben.
+The private key remains on your local machine. Enter the server password.
 
-Danach kann man sich mit dem SSH-Key verbinden:
+After that, connect using the SSH key:
 
 ```bash
 ssh -i ~/.ssh/example_sshkey_name user@000.000.00.00
 ```
 
-**Ergebnis:** Mit dem Server ohne Passwortabfrage verbunden.
+**Result:** Connected to server without password prompt.
 
-#### Berechtigungen prüfen
+#### Check Permissions
 
-Server-Verzeichnis auflisten:
+List server directory:
 
 ```bash
 ls -al ~/
 ```
 
-Ins SSH-Verzeichnis wechseln:
+Change to SSH directory:
 
 ```bash
 cd /.ssh
 ```
 
-Authorized Keys anzeigen:
+Display authorized keys:
 
 ```bash
 cat ~/.ssh/authorized_keys
 ```
 
-Unter Windows PowerShell:
+On Windows PowerShell:
 
 ```bash
 type pfad_ssh_key/ssh_key_name.pub
 ```
 
-### SSH-Konfiguration
+### SSH Configuration
 
-#### Password-Login deaktivieren (nur SSH-Keys)
+#### Disable Password Login (SSH Keys Only)
 
-Konfigurationsdatei öffnen:
+Open configuration file:
 
 ```bash
 sudo nano /etc/ssh/sshd_config
 ```
 
-Folgenden Eintrag ändern:
+Change the following entry:
 
 ```
 PasswordAuthentication no
 ```
 
-Speichern und beenden (Ctrl+X, Y, Enter).
+Save and exit (Ctrl+X, Y, Enter).
 
-SSH-Service neu starten:
+Restart SSH service:
 
 ```bash
 sudo systemctl restart ssh.service
 ```
 
-Logout und Funktion verifizieren:
+Logout and verify functionality:
 
 ```bash
 logout
 ```
 
-Verbindung erneut herstellen:
+Reconnect:
 
 ```bash
 ssh -i ~/.ssh/example_sshkey_name user@000.000.00.00
 ```
 
-Nochmal logout und gegen mit nur Public Key überprüfen:
+Logout again and verify with public key only:
 
 ```bash
 ssh -o PubkeyAuthentication=no user@000.000.00.00
 ```
 
-**Ergebnis sollte sein:** `user@000.000.00.00: Permission denied (publickey)`
+**Expected result:** `user@000.000.00.00: Permission denied (publickey)`
 
-#### Alias für SSH-Verbindung
+#### Alias for SSH Connection
 
 ```bash
 alias name_alias="ssh -i ~/.ssh/example_sshkey_name user@000.000.00.00"
 ```
 
-### Nginx Konfiguration
+### Nginx Configuration
 
-#### Verzeichnis und HTML-Datei erstellen
+#### Create Directory and HTML File
 
-Geschütztes Verzeichnis erstellen:
+Create protected directory:
 
 ```bash
 sudo mkdir /var/www/alternatives
 ```
 
-HTML-Datei anlegen:
+Create HTML file:
 
 ```bash
 sudo touch /var/www/alternatives/alternate-index.html
 ```
 
-Verzeichnis prüfen:
+Verify directory:
 
 ```bash
 ls /var/www/alternatives
 ```
 
-#### Nginx-Konfiguration hinzufügen
+#### Add Nginx Configuration
 
-Neue Konfiguration unter `sites-enabled` erstellen:
+Create new configuration under `sites-enabled`:
 
 ```bash
 sudo nano /etc/nginx/sites-enabled/alternatives
 ```
 
-Beispiel-Konfiguration:
+Example configuration:
 
 ```nginx
 server {
@@ -223,49 +223,49 @@ server {
 }
 ```
 
-Speichern und beenden.
+Save and exit.
 
-#### HTML-Datei anpassen
+#### Customize HTML File
 
 ```bash
 sudo nano /var/www/alternatives/alternate-index.html
 ```
 
-Gewünschten HTML-Code einfügen und speichern.
+Insert desired HTML code and save.
 
-#### Nginx neu starten und Status überprüfen
+#### Restart Nginx and Check Status
 
 ```bash
 sudo service nginx restart
 ```
 
-Status überprüfen:
+Check status:
 
 ```bash
 systemctl status nginx.service
 ```
 
-### SSH-Config für mehrere Identities
+### SSH Config for Multiple Identities
 
-SSH-Config-Verzeichnis finden:
+Find SSH config directory:
 
 ```bash
 ls ~/.ssh
 ```
 
-Inhalt der Config-Datei anzeigen:
+Display config file contents:
 
 ```bash
 cat ~/.ssh/config
 ```
 
-Config-Datei bearbeiten:
+Edit config file:
 
 ```bash
 nano ~/.ssh/config
 ```
 
-Host, User, Authentifizierungsart und Verzeichnis des Public Keys angeben:
+Specify host, user, authentication method, and path to public key:
 
 ```
 Host vserver
@@ -281,9 +281,9 @@ Host github
     IdentitiesOnly yes
 ```
 
-Speichern und beenden.
+Save and exit.
 
-Nun kann man sich einfach mit `ssh vserver` verbinden.
+Now you can simply connect with `ssh vserver`.
 
 ## Further References
 
