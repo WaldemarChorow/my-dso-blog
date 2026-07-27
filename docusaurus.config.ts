@@ -100,7 +100,7 @@ const config: Config = {
             },
             {
               label: 'Projects',
-              to: '/docs/projects',
+              to: '/docs/projects/overview',
             },
           ],
         },
