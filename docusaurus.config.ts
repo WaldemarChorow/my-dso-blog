@@ -5,16 +5,16 @@ import {config as dotenvconfig}  from "dotenv";
 
 dotenvconfig();
 
-/* TODO: change to read configuration from environment */
-const blogEnabled = Boolean(process.env.BLOG_ENABLED === 'true')
+const blogEnabled = Boolean(process.env.BLOG_ENABLED === 'true');
+const gitRepositoryUrl = process.env.GIT_REPOSITORY_URL ?? 'https://github.com/WaldemarChorow/my-dso-blog';
 
 const config: Config = {
-  title: 'DSO Live Demo Docs',
-  tagline: 'Dinosaurs are cool',
+  title: 'Learn diary',
+  tagline: 'by Waldemar Chorow',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: process.env.DEPLOYMENT_URL ?? "https://spmse.github.io",
+  url: process.env.DEPLOYMENT_URL ?? "https://WaldemarChorow.github.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: process.env.BASE_URL ?? "/",
@@ -43,23 +43,16 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/spmse/dev-blog-template',
+          editUrl: gitRepositoryUrl,
         },
-        blog: blogEnabled ? 
+        blog: blogEnabled ?
           {
             showReadingTime: true,
             feedOptions: {
               type: ['rss', 'atom'],
               xslt: true,
             },
-            // Please change this to your repo.
-            // Remove this to remove the "edit this page" links.
-            editUrl:
-              'https://github.com/spmse/dev-blog-template',
-            // Useful options to enforce blogging best practices
+            editUrl: gitRepositoryUrl,
             onInlineTags: 'warn',
             onInlineAuthors: 'warn',
             onUntruncatedBlogPosts: 'warn',
@@ -76,7 +69,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'Waldemar Chorow',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
@@ -89,7 +82,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/spmse/dev-blog-template',
+          href: gitRepositoryUrl,
           label: 'Github',
           position: 'right',
         },
@@ -105,22 +98,9 @@ const config: Config = {
               label: 'Tutorial',
               to: '/docs/guides/intro',
             },
-          ],
-        },
-        {
-          title: 'Community',
-          items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              label: 'Projects',
+              to: '/docs/projects',
             },
           ],
         },
@@ -129,12 +109,16 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: gitRepositoryUrl,
+            },
+            {
+              label: 'Template',
+              href: 'https://github.com/spmse/dev-blog-template',
             }
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Sven Patrick Meier (spmse). Built with Docusaurus and 💚.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Waldemar Chorow. Built with Docusaurus and 💚, extended from the developer-akademie-starter.`,
     },
     prism: {
       theme: prismThemes.github,
@@ -158,9 +142,9 @@ const config: Config = {
 
 
 if (blogEnabled) {
-  (config.themeConfig.navbar as any).items.push({to: '/blog', label: 'Blog', position: 'left'});
+  (config.themeConfig!.navbar as any).items.push({to: '/blog', label: 'Blog', position: 'left'});
   (
-    config.themeConfig.footer as any
+    config.themeConfig!.footer as any
   ).links[2].items.push({
     to: '/blog',
     label: 'Blog',
