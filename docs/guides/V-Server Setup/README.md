@@ -5,13 +5,14 @@ Documentation for configuring my first cloud server during the Developer Akademi
 ## Table of Contents
 
 1. [Quickstart](#quickstart)
-2. [Server Update](#server-update)
-3. [SSH Keys and Initial Login](#ssh-keys-and-initial-login)
+2. [Connect to Server](#connect-to-the-server)
+3. [Server Update](#server-update)
+4. [SSH Keys and Initial Login](#ssh-keys-and-initial-login)
 4. [SSH Configuration](#ssh-configuration)
-5. [SSH Config for Multiple Identities](#ssh-config-for-multiple-identities)
-6. [Nginx Installation](#nginx-installation)
-7. [Nginx Configuration](#nginx-configuration)
-8. [Connect Server with GitHub](#connect-server-with-github)
+6. [SSH Config for Multiple Identities](#ssh-config-for-multiple-identities)
+7. [Nginx Installation](#nginx-installation)
+8. [Nginx Configuration](#nginx-configuration)
+9. [Connect Server with GitHub](#connect-server-with-github)
    - [Set Git User](#set-git-user)
    - [Set Git Email](#set-git-email)
    - [Verify Git Configuration](#verify-git-configuration)
@@ -19,7 +20,7 @@ Documentation for configuring my first cloud server during the Developer Akademi
    - [Add Public Key to GitHub](#add-public-key-to-github)
    - [Test Connection](#test-connection)
    - [Troubleshooting: Connection Fails](#troubleshooting-connection-fails)
-9. [Further References](#further-references)
+10. [Further References](#further-references)
 
 import GithubLinkAdmonition from '@site/src/components/GithubLinkAdmonition';
 
@@ -31,13 +32,25 @@ import GithubLinkAdmonition from '@site/src/components/GithubLinkAdmonition';
 
 ## Quickstart
 
-1. Update server: `sudo apt update && sudo apt upgrade`
-2. Install Nginx: `sudo apt install nginx -y`
+1. Connect to server: `ssh -i ~/.ssh/keyname user@000.000.000.000`
+2. Update server: `sudo apt update && sudo apt upgrade`
 3. Generate SSH keys: `ssh-keygen -t ed25519`
 4. Copy SSH key to server: `ssh-copy-id -i ~/.ssh/keyname user@000.000.000.000`
-5. Connect to server: `ssh -i ~/.ssh/keyname user@000.000.000.000`
-6. Disable password authentication in SSH config
+5. Disable password authentication in SSH config
+6. Install Nginx: `sudo apt install nginx -y`
 7. Add public key to GitHub and verify connection
+
+## Connect to the Server
+
+Connect to your server for the first time with your password:
+
+```bash
+ssh user@000.000.000.000
+```
+
+- Confirm the host fingerprint by typing `yes`
+- Enter your server password
+- Connection to server established
 
 ## Server Update
 
@@ -72,18 +85,6 @@ Verify the key was created:
 ```bash
 ls ~/.ssh/
 ```
-
-### Connect to the Server
-
-Connect to your server for the first time with your password:
-
-```bash
-ssh user@000.000.000.000
-```
-
-- Confirm the host fingerprint by typing `yes`
-- Enter your server password
-- Connection to server established
 
 ### Copy SSH Key to Server
 
